@@ -1,2 +1,2 @@
-# DSA_Notes
-This repo contains detailed notes of DSA.
+# Advance_Java_JDBC_Notes
+
