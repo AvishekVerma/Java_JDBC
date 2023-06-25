@@ -13,8 +13,8 @@ public class InsertApp {
 		
 		
 		// Step 1. Load and register the driver
-//		Class.forName("com.mysql.cj.jdbc.Driver");
-//		System.out.println("Driver Loaded Successfully....");
+		//Class.forName("com.mysql.cj.jdbc.Driver");
+		//System.out.println("Driver Loaded Successfully....");
 		
 		// Step 2. Establish the connection with Database
 		String url = "jdbc:mysql:///avishekdb"; // it will work bcz java and SQL is in same system.
