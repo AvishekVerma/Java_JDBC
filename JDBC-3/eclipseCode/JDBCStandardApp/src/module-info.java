@@ -4,6 +4,6 @@
 /**
  * 
  */
-module JDBCAPP {
+module JDBCApp {
 	requires java.sql;
 }
