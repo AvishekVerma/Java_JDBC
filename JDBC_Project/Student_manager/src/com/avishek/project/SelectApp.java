@@ -1,45 +1,70 @@
 package com.avishek.project;
 
+import java.io.IOException;
 import java.sql.Connection;
-import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.ResultSet;
+import java.util.Scanner;
+
+import com.avishek.utils.JdbcUtil;
 
 public class SelectApp {
-	
-	public static void main(String[] args) throws ClassNotFoundException, SQLException
-	{
-		// Step-1 Load & register the driver
-//		Class.forName("com.mysql.cj.jdbc.Driver");
-//		System.out.println("Driver loaded successfully...");
-		// Step-2 Establish the connection with DataBase.
-//		String url = "jdbc:mysql://localhost:3306/avishekdb";
-		String url = "jdbc:mysql:///avishekdb";
-		String user = "root";
-		String pass = "root123";
-		Connection conn = DriverManager.getConnection(url,user,pass);
-		System.out.println("Connection object created...");
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Connection conn = null;
+		Statement  stat = null;
+		ResultSet resSet=null;
 		
-		// Step-3 Create statement object & execute the query.
-		Statement stat = conn.createStatement();
-		System.out.println("Statement object created...");
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Enter the sid : ");
+		Integer inputSid = sc.nextInt();
 		
-		String sqlSelectQuery = "select sid,sname,sage,saddress from student";
-		ResultSet resultSet = stat.executeQuery(sqlSelectQuery);
-		
-		System.out.println("ID\tNAME\tAGE\tADDRESS");
-		while(resultSet.next()) {
-			Integer sid=resultSet.getInt(1);
-			String sname=resultSet.getString(2);
-			Integer sage=resultSet.getInt(3);
-			String saddr=resultSet.getString(4);
-			System.out.println(sid+"\t"+sname+"\t"+sage+"\t"+saddr);
+		try {
+			conn = JdbcUtil.getJdbcConn();
+			if(conn != null) {
+				stat = conn.createStatement();
+			}
+			if(stat != null) {
+				String sqlSelectStat = "select sid,sname,sage,saddress from student where sid='"+inputSid+"' ";
+				resSet = stat.executeQuery(sqlSelectStat);
+			}
+			if(resSet==null) {
+				System.out.println("Record doesn't exist for given Id "+inputSid);
+			}
+			if(resSet != null) {
+				System.out.println("ID\tNAME\tAGE\tADDRESS");
+				System.out.println("---------------------------------");
+				
+				while(resSet.next()) {
+					Integer sid=resSet.getInt(1);
+					String sname=resSet.getString(2);
+					Integer sage=resSet.getInt(3);
+					String saddr=resSet.getString(4);
+					System.out.println(sid+"\t"+sname+"\t"+sage+"\t"+saddr);
+				}
+//				if(!resSet.next()) {
+//					System.out.println("Record doesn't exist for given Id "+inputSid);
+//				}
+			}
+		}catch(IOException io) {
+			io.printStackTrace();
+		}catch(SQLException se) {
+			se.printStackTrace();
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				JdbcUtil.cleanUp(conn, stat, resSet);
+				sc.close();
+				System.out.println("---------------------------------");
+				System.out.println("Resources closed successfully...");
+			}catch(SQLException se) {
+				se.printStackTrace();
+			}
 		}
 		
-		resultSet.close();
-		stat.close();
-		conn.close();
 	}
 
 }

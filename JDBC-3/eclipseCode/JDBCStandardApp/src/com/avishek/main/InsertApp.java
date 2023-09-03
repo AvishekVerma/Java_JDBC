@@ -23,6 +23,7 @@ public class InsertApp {
 			}
 			if(statement != null) {
 				resultSet = statement.executeQuery("select sid, sname, sage, saddress from student");
+				// String.format("insert into student(`sname`,`sage`,`saddress`) values ('%s',%d,'%s')",sname,sage,saddress);
 			}
 			
 			if(resultSet != null) {
