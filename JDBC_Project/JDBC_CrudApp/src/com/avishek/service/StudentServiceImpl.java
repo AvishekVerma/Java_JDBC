@@ -29,7 +29,8 @@ public class StudentServiceImpl implements IStudentService {
 
 	@Override
 	public String deleteStudent(Integer sid) {
-		return null;
+		stdDao = StudentDaoFactory.getStudentDao();
+		return stdDao.deleteStudent(sid);
 	}
 
 }

@@ -37,6 +37,7 @@ public class StudentDaoImpl implements IStudentDao {
 			}
 		} catch(SQLException | IOException e) {
 			e.printStackTrace();
+			return "failure";
 		}
 		
 		return "failure";
@@ -90,7 +91,28 @@ public class StudentDaoImpl implements IStudentDao {
 
 	@Override
 	public String deleteStudent(Integer sid) {
-		return null;
+		
+		String sqlDeleteQuery="delete from student where sid=?";
+		try {
+			connection = JdbcUtil.getJdbcConn();
+			if(connection != null) 
+				pstmt = connection.prepareStatement(sqlDeleteQuery);
+			
+			if(pstmt != null) {
+				pstmt.setInt(1, sid);
+				int rowAffected = pstmt.executeUpdate();
+				if(rowAffected == 1) {
+					return "success";
+				}else {
+					return "not found";
+				}
+			}
+		} catch(SQLException | IOException e) {
+			e.printStackTrace();
+			return "failure";
+		}
+		
+		return "failure";
 	}
 
 }
