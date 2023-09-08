@@ -1,22 +1,25 @@
 package com.avishek.service;
 
+import com.avishek.daofactory.StudentDaoFactory;
 import com.avishek.dto.Student;
+import com.avishek.persistence.IStudentDao;
 import com.avishek.servicefactory.StudentServiceFactory;
 
 //Service layer logic
 public class StudentServiceImpl implements IStudentService {
 
-	IStudentService stdService;
+	private IStudentDao stdDao;
 	
 	@Override
 	public String addStudent(String sname, Integer sage, String saddress) {
-		stdService = StudentServiceFactory.getStudentService();
-		return stdService.addStudent(sname, sage, saddress);
+		stdDao = StudentDaoFactory.getStudentDao();
+		return stdDao.addStudent(sname, sage, saddress);
 	}
 
 	@Override
 	public Student searchStudent(Integer sid) {
-		return null;
+		stdDao = StudentDaoFactory.getStudentDao();
+		return stdDao.searchStudent(sid);
 	}
 
 	@Override
