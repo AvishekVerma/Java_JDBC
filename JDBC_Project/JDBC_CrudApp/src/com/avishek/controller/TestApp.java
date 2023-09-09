@@ -14,11 +14,34 @@ public class TestApp {
 
 	public static void main(String[] args) throws IOException {
 		
-//		insertoperation();
-//		selectOperation();
-//		deleteRecord();
-		
-		updateOperation();
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		while(true) {
+			
+			System.out.println("1. CREATE");
+			System.out.println("2. READ");
+			System.out.println("3. UPDATE");
+			System.out.println("4. DELETE");
+			System.out.println("5. EXIT");
+			System.out.print("Enter your choice, Press[1/2/3/4/5] :: | ");
+			
+			String option = br.readLine();
+			
+			switch(option) {
+			case "1": insertoperation();
+				break;
+			case "2": selectOperation();
+				break;
+			case "3": updateOperation();
+				break;
+			case "4": deleteRecord();
+				break;
+			case "5": System.out.println("****** Thanks for using out application ******");
+				System.exit(0);
+			default: System.out.println("Invalid option plz try again with valid options...");
+				break;
+			}
+			
+		}
 		
 	}
 
@@ -74,7 +97,7 @@ public class TestApp {
 			System.out.println("Student record not available for the given id " + sid + "for updation...");
 		}
 
-		br.close();
+//		br.close();
 	}
 
 	private static void deleteRecord() {
@@ -93,7 +116,7 @@ public class TestApp {
 			System.out.println("Record delation failed...");
 		}
 		
-		sc.close();
+//		sc.close();
 	}
 
 	private static void selectOperation() {
@@ -105,13 +128,13 @@ public class TestApp {
 		IStudentService studentService = StudentServiceFactory.getStudentService();
 		Student std = studentService.searchStudent(sid);
 		if (std != null) {
-			System.out.println(std);
+//			System.out.println(std);
 			System.out.println("Id\tNAME\tAGE\tADDRESS");
 			System.out.println(std.getSid() + "\t" + std.getSname() + "\t" + std.getSage() + "\t" + std.getSaddress());
 		} else {
 			System.out.println("Record not found for the given id :: " + sid);
 		}
-		sc.close();
+//		sc.close();
 	}
 
 	private static void insertoperation() {
@@ -135,7 +158,7 @@ public class TestApp {
 			System.out.println("Record insertion failed...");
 		}
 		
-		sc.close();
+//		sc.close();
 	}
 
 }
